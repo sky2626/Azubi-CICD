@@ -1,0 +1,39 @@
+name: Cloud CI Pipeline
+
+# Task 4: Trigger on push
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    # Task 4: Use Ubuntu runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # Task 4: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Task 4: Set up language runtime
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # Task 7: Intermediate step — echo build message + print runtime version
+      - name: Build info
+        run: |
+          echo "Starting Cloud CI Pipeline build..."
+          python --version
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      # Task 4: Run app
+      - name: Run app
+        run: python app.py
+
+      # Task 4: Run test command
+      - name: Run tests
+        run: pytest -v
